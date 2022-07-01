@@ -85,3 +85,23 @@ application:
         resources:
           limits:
             nvidia.com/gpu: <number-of-gpus>
+
+  # Description: Config dns resolution parameters
+  dns:
+    # optional from "local" or "tencent”
+    provider:
+      required: true
+      default: tencent
+    # public ip
+    value:
+      required: true
+      default: <value>
+    # dns service's secretId
+    SecretId:
+      required: true
+      default: <secret-id>
+    # dns service's secretKey
+    SecretKey:
+      required: true
+      default: <secret-key>
+
