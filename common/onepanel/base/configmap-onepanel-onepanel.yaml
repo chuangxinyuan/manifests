@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: onepanel
+  namespace: onepanel
+data:
+  ONEPANEL_FQDN: $(applicationFqdn)
+  ONEPANEL_DOMAIN: $(applicationDomain)
+  ONEPANEL_API_URL: $(onepanelApiUrl)
+  ONEPANEL_PROVIDER: $(applicationProvider)
+  databaseHost: $(databaseHost)
+  databasePort: $(databasePort)
+  databaseName: $(databaseDatabaseName)
+  databaseDriverName: $(databaseDriverName)
+  applicationNodePoolLabel: $(applicationNodePoolLabel)
+  applicationNodePoolOptions: $(applicationNodePoolOptions)

@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+ - application
+ - cert-manager
+ - istio
+ - argo
+ - common/onepanel/overlays/istio
+ - common/cert-manager/overlays/route53
+ - onepanel/base
+ - storage/overlays/aks
+ - storage/overlays/eks
+ - storage/overlays/gke
+ - storage/overlays/microk8s
+ - storage/overlays/minikube
+configurations:
+ - configs/varreference.yaml

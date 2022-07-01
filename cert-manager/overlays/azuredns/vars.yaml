@@ -1,0 +1,26 @@
+certManager:
+  # DNS Provider: AzureDNS
+  # Docs: https://onepanelio.github.io/core-docs/docs/deployment/configuration/tls#azuredns
+  # CLI flag: --dns-provider=azuredns
+  azuredns:
+    clientId:
+      required: true
+      default: <service-provider-app-id>
+    spPassword:
+      required: true
+      default: <service-provider-password>
+    subscriptionId:
+      required: true
+      default: <azure-subscription-id>
+    tenantId:
+      required: true
+      default: <tenant-id>
+    resourceGroupName:
+      required: true
+      default: <resource-group-name>
+    hostedZoneName:
+      required: true
+      default: <hosted-zone-name>
+    environment:
+      true: false
+      default: AzurePublicCloud

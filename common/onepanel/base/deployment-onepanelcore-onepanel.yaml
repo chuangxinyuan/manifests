@@ -1,0 +1,33 @@
+# onepanel-core deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: onepanel-core
+  name: onepanel-core
+  namespace: onepanel
+spec:
+  template:
+    metadata:
+      name: onepanel-core
+      labels:
+        app: onepanel-core
+      annotations:
+        traffic.sidecar.istio.io/includeOutboundIPRanges: ''
+    spec:
+      serviceAccountName: onepanel
+      containers:
+        - name: onepanel-core
+          image: onepanel/core:$(applicationCoreImageTag)
+          imagePullPolicy: $(applicationCoreImagePullPolicy)
+          command: ["/bin/sh", "-c"]
+          args: ["./core"]
+          ports:
+            - containerPort: 8888
+            - containerPort: 8887
+          envFrom:
+            - secretRef:
+                name: onepanel
+  selector:
+    matchLabels:
+      app: onepanel-core

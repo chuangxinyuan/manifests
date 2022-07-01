@@ -1,0 +1,18 @@
+# onepanel-core deployment patch
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: onepanel-core
+  name: onepanel-core
+  namespace: onepanel
+spec:
+  template:
+    metadata:
+      name: onepanel-core
+      labels:
+        app: onepanel-core
+    spec:
+      serviceAccountName: onepanel
+      containers:
+        - name: onepanel-core

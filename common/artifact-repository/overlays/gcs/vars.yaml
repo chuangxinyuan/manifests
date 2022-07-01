@@ -1,0 +1,24 @@
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Component: Artifact repository
+# Description: S3 compatible object storage for storing files across Onepanel
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+artifactRepository:
+  gcs:
+    # Name of bucket, example: my-bucket
+    bucket:
+      required: true
+      default: <bucket-name>
+    projectId:
+      required: true
+      default: <project-id>
+    region:
+      required: true
+      default: us-west1
+    # Key Format for objects stored by Workflows. This can reference Workflow variables
+    keyFormat:
+      required: true
+      default: artifacts/{{workflow.namespace}}/{{workflow.name}}/{{pod.name}}
+    serviceAccountKey:
+      required: true
+      default: |
+        <key.json-file-data>

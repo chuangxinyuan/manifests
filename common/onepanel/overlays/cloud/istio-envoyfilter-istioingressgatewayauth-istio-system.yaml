@@ -1,0 +1,92 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: istio-ingress-gateway-auth
+  namespace: istio-system
+spec:
+  configPatches:
+      - applyTo: HTTP_FILTER
+        match:
+          context: GATEWAY
+          routeConfigurationMatch:
+            gateway: istio-system/ingressgateway
+          listener:
+            filterChain:
+              filter:
+                name: envoy.filters.network.http_connection_manager
+          proxy:
+            proxyVersion: ^1\.9.*
+        patch:
+          operation: INSERT_BEFORE
+          value:
+            name: envoy.filters.http.lua
+            typed_config:
+              '@type': type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua
+              inlineCode:  |
+                function get_value(keyvaluepairs, key)
+                  for value in string.gmatch(keyvaluepairs, key .. "=([^;]*)") do
+                    return value
+                  end
+                end
+
+                -- Called on the request path.
+                function envoy_on_request(request_handle)
+                  local id_token = nil
+                  local cookies = request_handle:headers():get("cookie")
+                  if cookies ~= nil then
+                    id_token = get_value(cookies, "auth%-token")
+                  end
+
+                  local auth_token = request_handle:headers():get("onepanel-access-token")
+                  if auth_token == nil then
+                    auth_token = request_handle:headers():get("onepanel-auth-token")
+                  end
+
+                  local headers =  {
+                    [":method"] = "POST",
+                    [":path"] = "/apis/v1beta1/auth",
+                    [":authority"] = "onepanel-core.onepanel.svc.local",
+                    ["onepanel-auth-token"] = auth_token,
+                    ["grpc-metadata-x-original-method"] = request_handle:headers():get(":method"),
+                    ["grpc-metadata-x-original-authority"] = request_handle:headers():get(":authority"),
+                    ["grpc-metadata-x-original-uri"] = request_handle:headers():get(":path")
+                  }
+
+                  if request_handle:headers():get(":method") == "OPTIONS" then
+                    return
+                  end
+
+                  local authority = headers["grpc-metadata-x-original-authority"]
+
+                  if authority == "$(applicationFqdn)" or
+                     authority == "onepanel-core.onepanel.svc.local" or
+                     authority == "serving.$(applicationDomain)" or
+                     authority == "sys-storage-$(applicationDefaultNamespace).$(applicationDomain)" then
+                    return
+                  end
+
+                  -- 17 is the length of "svc.cluster.local"
+                  local i = string.find(authority, "svc.cluster.local", string.len(authority) - 17)
+                  if i ~= nil then
+                    return
+                  end
+
+                  if id_token ~= nil then
+                    headers["authorization"] = "Bearer " .. id_token
+                  end
+
+                  local response_headers, response_body = request_handle:httpCall(
+                      "outbound|80||onepanel-core.onepanel.svc.cluster.local",
+                      headers,
+                      "",
+                      5000
+                  )
+
+                  if tonumber(response_headers[":status"]) ~= 200 then
+                    print("Not authorized.")
+                    request_handle:respond(
+                      {[":status"] = response_headers[":status"]},
+                      response_body
+                    )
+                  end
+                end

@@ -1,0 +1,87 @@
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Component: Database
+# Description: Database connection information
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+database:
+  # Database host
+  # For in-cluster database, leave as `postgres`.
+  # If using an external managed databases, use the host for that database.
+  host:
+    required: true
+    default: postgres
+  # Database username
+  # For in-cluster database, leave as `onepanel`.
+  # If using an external managed database, use the username for that database.
+  username:
+    required: true
+    default: onepanel
+  # Database password
+  # For in-cluster database, leave as is.
+  # If using an external database, use the password for that database.
+  password:
+    required: true
+    default: <password>
+  # Database port
+  port:
+    required: true
+    default: 5432
+  # Name of database
+  # For in-cluster database, leave as `onepanel`.
+  # If using an external managed database, use the name of that database.
+  databaseName:
+    required: true
+    default: onepanel
+  # Do not change, only `postgres` driver is supported at this time.
+  driverName:
+    required: true
+    default: postgres
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Component: Onepanel
+# Description: Onepanel application information
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+application:
+  # First namespace that will be created in Onepanel, more can be added later
+  # Note that you cannot use any of the following reserved namespaces:
+  #   onepanel, default, application-system, cert-manager, istio-system, knative-serving, kube-public, kube-system
+  defaultNamespace:
+    required: true
+    default: <namespace>
+  # Domain where Onepanel is hosted
+  # Use a first-level or multi-level subdomain like example.com or sub.example.com
+  domain:
+    required: true
+    default: <domain>
+  # The Fully Qualified Domain (FQDN) where Onepanel will be hosted.
+  # If `domain` above is set to example.com or sub.example.com, then your FQDN could be: app.example.com or app.sub.example.com respectively
+  fqdn:
+    required: true
+    default: <fully-qualified-domain-name>
+  # The kubernetes cluster where Onepanel will be deployed.
+  # Valid values: aks, eks, gke, microk8s
+  provider:
+    required: true
+    default: <provider>
+  # HTTP or HTTPS - Do not change, determined by `opctl init --enable-https`
+  # CLI flag: --enable-https
+  insecure:
+    required: true
+    default: false
+  # Node pool key and values used for AutoScaling
+  nodePool:
+    # Cloud providers will automatically set label key as "node.kubernetes.io/instance-type" on all nodes
+    # For all Kubernetes 1.16.x versions, use "beta.kubernetes.io/instance-type"
+    # You would also need to use "beta.kubernetes.io/instance-type" for all versions of AKS and GKE 1.17.x
+    label: node.kubernetes.io/instance-type
+    # These are the machine type options that will be available in Onepanel
+    #   `name` can be any user friendly name
+    #   `value` should be the instance type in your cloud provider
+    #   `resources.limits` should only be set if the node pool has GPUs
+    # The first option will be used as default.
+    options:
+      - name: 'CPU: X, RAM: Z GB'
+        value: <instance-type-name-1>
+      - name: 'CPU: X, GPU: Y, RAM: Z GB'
+        value: <instance-type-name-2>
+        resources:
+          limits:
+            nvidia.com/gpu: <number-of-gpus>

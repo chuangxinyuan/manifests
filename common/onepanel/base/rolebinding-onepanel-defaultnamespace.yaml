@@ -1,0 +1,19 @@
+# needs to be bound for each default service account
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  labels:
+    app: onepanel
+  name: onepanel
+  namespace: $(applicationDefaultNamespace)
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: onepanel
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: $(applicationDefaultNamespace) # replace with relevant namespace
+- kind: ServiceAccount
+  name: onepanel
+  namespace: onepanel

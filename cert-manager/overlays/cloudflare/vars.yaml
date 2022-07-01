@@ -1,0 +1,11 @@
+certManager:
+  # DNS Provider: Cloudflare
+  # Docs: https://onepanelio.github.io/core-docs/docs/deployment/configuration/tls#cloudflare
+  # CLI flag: --dns-provider=cloudflare
+  cloudflare:
+    apiToken:
+      required: true
+      default: <api-token>
+    email:
+      required: true
+      default: <email>
