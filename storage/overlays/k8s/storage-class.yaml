@@ -2,6 +2,6 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: onepanel
-provisioner: microk8s.io/hostpath
+provisioner: rook-ceph.rbd.csi.ceph.com
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
