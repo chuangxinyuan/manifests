@@ -16,7 +16,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: onepanel-core-ui
-          image: onepanel/core-ui:$(applicationCoreuiImageTag)
+          image: cxyacr.azurecr.cn/docker.io/onepanel/core-ui:$(applicationCoreuiImageTag)
           imagePullPolicy: $(applicationCoreuiImagePullPolicy)
           command:
             - "/bin/sh"

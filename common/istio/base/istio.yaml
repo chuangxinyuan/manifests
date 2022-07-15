@@ -5272,7 +5272,7 @@ spec:
       serviceAccountName: istio-ingressgateway-service-account
       containers:
         - name: istio-proxy
-          image: "docker.io/istio/proxyv2:1.9.1"
+          image: "cxyacr.azurecr.cn/docker.io/istio/proxyv2:1.9.1"
           ports:
             - containerPort: 15021
               protocol: TCP
@@ -5514,7 +5514,7 @@ spec:
         fsGroup: 1337
       containers:
         - name: discovery
-          image: "docker.io/istio/pilot:1.9.1"
+          image: "cxyacr.azurecr.cn/docker.io/istio/pilot:1.9.1"
           args:
           - "discovery"
           - --monitoringAddr=:15014
