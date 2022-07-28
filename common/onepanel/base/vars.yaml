@@ -105,3 +105,32 @@ application:
       required: true
       default: <secret-key>
 
+global:
+  imageRegistry:
+    # registry address
+    server:
+      required: true
+      default: cxyacr.azurecr.cn
+    # registry's username
+    username:
+      required: true
+      default: <usename>
+    # registry's password
+    password:
+      required: true
+      default: <password>
+    # registry's
+    email:
+      required: true
+      default: <email>
+  affinity:
+    # the application affinity label
+    key:
+      required: true
+      default: aimprole.shaiic.com
+    values:
+      required: true
+      default: controller
+    operator:
+      required: true
+      default: In

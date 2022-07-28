@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: affinity-patch
+metadata:
+  name: affinity-patch
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: $(globalAffinityKey)
+                    operator: $(globalAffinityOperator)
+                    values:
+                      - $(globalAffinityValues)
