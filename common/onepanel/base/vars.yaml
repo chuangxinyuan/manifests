@@ -51,6 +51,10 @@ application:
   domain:
     required: true
     default: <domain>
+  # Use a prefix domain like dev or test or product
+  prefixDomain:
+    required: true
+    default: <prefix-domain>
   # The Fully Qualified Domain (FQDN) where Onepanel will be hosted.
   # If `domain` above is set to example.com or sub.example.com, then your FQDN could be: app.example.com or app.sub.example.com respectively
   fqdn:

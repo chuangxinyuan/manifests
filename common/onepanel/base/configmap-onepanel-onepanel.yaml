@@ -6,6 +6,7 @@ metadata:
 data:
   ONEPANEL_FQDN: $(applicationFqdn)
   ONEPANEL_DOMAIN: $(applicationDomain)
+  ONEPANEL_PREFIX_DOMAIN: $(applicationPrefixDomain)
   ONEPANEL_API_URL: $(onepanelApiUrl)
   ONEPANEL_PROVIDER: $(applicationProvider)
   databaseHost: $(databaseHost)
