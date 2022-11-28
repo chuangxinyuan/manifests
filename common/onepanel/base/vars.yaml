@@ -123,7 +123,7 @@ global:
     password:
       required: true
       default: <password>
-    # registry's
+    # registry's email
     email:
       required: true
       default: <email>

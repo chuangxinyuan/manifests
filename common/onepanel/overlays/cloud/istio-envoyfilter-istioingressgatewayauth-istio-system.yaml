@@ -60,9 +60,9 @@ spec:
 
                   if authority == "$(applicationFqdn)" or
                      authority == "onepanel-core.onepanel.svc.local" or
-                     authority == "serving.$(applicationDomain)" or
+                     authority == "serving.$(applicationFullDomain)" or
                      -- authority == "sys-storage-$(applicationDefaultNamespace).$(applicationDomain)" then
-                     authority == "sys-storage.$(applicationDefaultNamespace).$(applicationDomain)" then
+                     authority == "sys-storage.$(applicationDefaultNamespace).$(applicationFullDomain)" then
                     return
                   end
 

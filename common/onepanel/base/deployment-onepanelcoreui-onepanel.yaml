@@ -24,6 +24,7 @@ spec:
           args:
             - find /usr/share/nginx/html/ -name '*.js' -type f -exec sed -i -e 's/<baseUrl>/$(applicationApiUrl)/g' {} \; ;
                find /usr/share/nginx/html/ -name '*.js' -type f -exec sed -i -e 's/<baseWSurl>/$(applicationApiWsUrl)/g' {} \; ;
+               find /usr/share/nginx/html/ -name '*.js' -type f -exec sed -i -e 's/<keycloakUrl>/http\:\/\/identity\.aimpcloud\.com/g' {} \; ;
                nginx -g 'daemon off;'
           ports:
             - containerPort: 4200

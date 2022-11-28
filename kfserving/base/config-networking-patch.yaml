@@ -1,6 +1,6 @@
 - op: add
   path: /data/domainTemplate
-  value: "{{.Name}}--{{.Namespace}}.{{.Domain}}"
+  value: "{{.Name}}.{{.Namespace}}.{{.Domain}}"
 - op: add
   path: /data/defaultExternalScheme
   value: "$(kfservingDefaultExternalScheme)"

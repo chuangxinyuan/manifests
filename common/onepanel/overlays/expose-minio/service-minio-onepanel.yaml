@@ -6,7 +6,7 @@ metadata:
 spec:
   hosts:
 #    - "sys-storage-$(applicationDefaultNamespace).$(applicationDomain)"
-    - "sys-storage.$(applicationDefaultNamespace).$(applicationDomain)"
+    - "sys-storage.$(applicationDefaultNamespace).$(applicationFullDomain)"
   gateways:
     - istio-system/ingressgateway
   http:
