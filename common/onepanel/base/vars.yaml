@@ -47,7 +47,7 @@ application:
     required: true
     default: <namespace>
   # Domain where Onepanel is hosted
-  # Use a first-level or multi-level subdomain like example.com or sub.example.com
+  # Use a first-level domain like example.com
   domain:
     required: true
     default: <domain>
@@ -56,7 +56,8 @@ application:
     required: true
     default: <prefix-domain>
   # The Fully Qualified Domain (FQDN) where Onepanel will be hosted.
-  # If `domain` above is set to example.com or sub.example.com, then your FQDN could be: app.example.com or app.sub.example.com respectively
+  # If `domain` above is set to example.com, then your FQDN could be: sub.example.com,
+  # finally you could get sub.prefixDomain.example.com
   fqdn:
     required: true
     default: <fully-qualified-domain-name>
