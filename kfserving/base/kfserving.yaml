@@ -16555,9 +16555,9 @@ data:
   predictors: |-
     {
         "tensorflow": {
-            "image": "tensorflow/serving",
-            "defaultImageVersion": "1.14.0",
-            "defaultGpuImageVersion": "1.14.0-gpu",
+            "image": "cxyacr.azurecr.cn/tensorflow/serving",
+            "defaultImageVersion": "2.2.0",
+            "defaultGpuImageVersion": "2.2.0-gpu",
             "defaultTimeout": "60",
             "supportedFrameworks": [
               "tensorflow"
@@ -16574,8 +16574,8 @@ data:
         },
         "sklearn": {
           "v1": {
-            "image": "gcr.io/kfserving/sklearnserver",
-            "defaultImageVersion": "latest",
+            "image": "cxyacr.azurecr.cn/kfserving/sklearnserver",
+            "defaultImageVersion": "v0.6.1",
             "supportedFrameworks": [
               "sklearn"
             ],
@@ -16619,7 +16619,7 @@ data:
             "multiModelServer": false
           },
           "v2" : {
-            "image": "pytorch/torchserve-kfs",
+            "image": "cxyacr.azurecr.cn/pytorch/torchserve-kfs",
             "defaultImageVersion": "0.4.0",
             "defaultGpuImageVersion": "0.4.0-gpu",
             "supportedFrameworks": [
@@ -16629,8 +16629,8 @@ data:
           }
         },
         "triton": {
-            "image": "nvcr.io/nvidia/tritonserver",
-            "defaultImageVersion": "20.08-py3",
+            "image": "cxyacr.azurecr.cn/nvcr.io/nvidia/tritonserver",
+            "defaultImageVersion": "20.10-py3",
             "supportedFrameworks": [
               "tensorrt",
               "tensorflow",
@@ -16667,7 +16667,7 @@ data:
     }
   storageInitializer: |-
     {
-        "image" : "gcr.io/kfserving/storage-initializer:v0.6.0",
+        "image" : "cxyacr.azurecr.cn/gcr.io/kfserving/storage-initializer:v0.6.0",
         "memoryRequest": "100Mi",
         "memoryLimit": "1Gi",
         "cpuRequest": "100m",
