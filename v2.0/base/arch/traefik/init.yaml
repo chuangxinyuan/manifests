@@ -6,6 +6,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.6.2
   creationTimestamp: null
   name: ingressroutes.traefik.containo.us
+  namespace: arch
 spec:
   group: traefik.containo.us
   names:

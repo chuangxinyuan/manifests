@@ -6,6 +6,7 @@ metadata:
     prometheus.io/path: /metrics
     prometheus.io/port: "8080"
     prometheus.io/scrape: "true"
+  namespace: arch
 spec:
   ports:
   - name: api

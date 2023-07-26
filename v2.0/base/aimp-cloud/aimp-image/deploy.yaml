@@ -4,6 +4,7 @@ metadata:
   labels:
     app: aimp-image
   name: aimp-image
+  namespace: aimp-cloud
 spec:
   progressDeadlineSeconds: 600
   replicas: 1

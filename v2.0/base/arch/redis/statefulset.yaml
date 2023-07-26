@@ -4,6 +4,7 @@ metadata:
   name: redis
   labels:
     app: redis
+  namespace: arch
 spec:
   replicas: 1
   serviceName: redis

@@ -4,6 +4,7 @@ metadata:
   labels:
     app: aimp-web
   name: aimp-web
+  namespace: aimp-cloud
 spec:
   ports:
   - name: http

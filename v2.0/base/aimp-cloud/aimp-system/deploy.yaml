@@ -5,6 +5,7 @@ metadata:
     app: aimp-system
     logging: "true"
   name: aimp-system
+  namespace: aimp-cloud
 spec:
   progressDeadlineSeconds: 600
   replicas: 1

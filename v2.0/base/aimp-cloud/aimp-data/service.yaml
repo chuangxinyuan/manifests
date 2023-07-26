@@ -8,6 +8,7 @@ metadata:
   labels:
     app: aimp-data
   name: aimp-data
+  namespace: aimp-cloud
 spec:
   ports:
   - name: http

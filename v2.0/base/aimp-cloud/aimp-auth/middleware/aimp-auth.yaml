@@ -2,6 +2,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: aimp-auth
+  namespace: aimp-cloud
 spec:
   forwardAuth:
     address: http://aimp-auth.aimp-cloud/api/aimp-auth/auth

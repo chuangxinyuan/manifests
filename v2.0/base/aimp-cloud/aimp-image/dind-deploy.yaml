@@ -4,6 +4,7 @@ metadata:
   name: dind
   labels:
     app: dind
+  namespace: aimp-cloud
 spec:
   selector:
     matchLabels:

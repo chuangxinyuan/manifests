@@ -4,6 +4,7 @@ metadata:
   labels:
     app: traefik
   name: traefik
+  namespace: arch
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
