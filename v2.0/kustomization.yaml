@@ -1,0 +1,51 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+ - aimp-cloud/aimp-auth/deploy.yaml
+ - aimp-cloud/aimp-auth/service.yaml
+ - aimp-cloud/aimp-auth/ingressRoute.yaml
+ - aimp-cloud/aimp-auth/middleware/aimp-auth.yaml
+ - aimp-cloud/aimp-auth/middleware/aimp-cors.yaml
+ - aimp-cloud/aimp-auth/middleware/aimp-file.yaml
+ - aimp-cloud/aimp-data/deploy.yaml
+ - aimp-cloud/aimp-data/service.yaml
+ - aimp-cloud/aimp-data/ingressRoute.yaml
+ - aimp-cloud/aimp-image/deploy.yaml
+ - aimp-cloud/aimp-image/service.yaml
+ - aimp-cloud/aimp-image/ingressRoute.yaml
+ - aimp-cloud/aimp-image/dind-deploy.yaml
+ - aimp-cloud/aimp-image/dind-service.yaml
+ - aimp-cloud/aimp-model/deploy.yaml
+ - aimp-cloud/aimp-model/service.yaml
+ - aimp-cloud/aimp-model/ingressRoute.yaml
+ - aimp-cloud/aimp-ra/deploy.yaml
+ - aimp-cloud/aimp-ra/service.yaml
+ - aimp-cloud/aimp-ra/ingressRoute.yaml
+ - aimp-cloud/aimp-report/deploy.yaml
+ - aimp-cloud/aimp-report/service.yaml
+ - aimp-cloud/aimp-report/ingressRoute.yaml
+ - aimp-cloud/aimp-report/serviceAccount.yaml
+ - aimp-cloud/aimp-system/deploy.yaml
+ - aimp-cloud/aimp-system/service.yaml
+ - aimp-cloud/aimp-system/ingressRoute.yaml
+ - aimp-cloud/aimp-system/serviceAccount.yaml
+ - aimp-cloud/aimp-web/deploy.yaml
+ - aimp-cloud/aimp-web/service.yaml
+ - aimp-cloud/aimp-web/virtualservices.yaml
+
+ - arch/argocd/install.yaml
+ - arch/argocd/virtualservices.yaml
+ - arch/fluentd/configmap.yaml
+ - arch/fluentd/daemonset.yaml
+ - arch/mysql/configmap.yaml
+ - arch/mysql/service.yaml
+ - arch/mysql/statefulset.yaml
+ - arch/redis/configmap.yaml
+ - arch/redis/service.yaml
+ - arch/redis/statefulset.yaml
+ - arch/traefik/api-virtualservices.yaml
+ - arch/traefik/configmap.yaml
+ - arch/traefik/deployment.yaml
+ - arch/traefik/init.yaml
+ - arch/traefik/service.yaml
+

@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: api-traefik
+spec:
+  gateways:
+  - istio-system/ingressgateway
+  hosts:
+  - api.uat.aimpcloud.cn
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: traefik
+        port:
+          number: 80

@@ -13,5 +13,6 @@ resources:
  - storage/overlays/gke
  - storage/overlays/microk8s
  - storage/overlays/minikube
+ - v2.0
 configurations:
  - configs/varreference.yaml

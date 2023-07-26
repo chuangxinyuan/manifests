@@ -1,0 +1,9 @@
+resources:
+- deploy.yaml
+- service.yaml
+- ingressRoute.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: cxyacr.azurecr.cn/aimp-cloud/aimp-model
+  newTag: "977"

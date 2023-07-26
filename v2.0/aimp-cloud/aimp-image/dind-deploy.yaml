@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dind
+  labels:
+    app: dind
+spec:
+  selector:
+    matchLabels:
+      app: dind
+  template:
+    metadata:
+      labels:
+        app: dind
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: aimprole.shaiic.com
+                    operator: In
+                    values:
+                      - controller
+      containers:
+        - name: docker-cli
+          image: 'docker:latest'
+          env:
+            - name: DOCKER_HOST
+              value: 127.0.0.1
+          command: [ "/bin/sh" ]
+          args: [ "-c", "sleep 86400;" ]
+        - image: docker:dind
+          name: dind
+          args:
+            - --registry-mirror=https://docker.mirrors.ustc.edu.cn/  # 指定一个镜像加速器地址
+          env:
+            - name: DOCKER_DRIVER
+              value: overlay2
+            - name: DOCKER_HOST
+              value: tcp://0.0.0.0:2375
+            - name: DOCKER_TLS_CERTDIR   # 禁用 TLS
+              value: ""
+          ports:
+            - name: daemon-port
+              containerPort: 2375
+          securityContext:
+            privileged: true # 需要设置成特权模式

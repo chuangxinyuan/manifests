@@ -1,0 +1,159 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: aimp-system
+    logging: "true"
+  name: aimp-system
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: aimp-system
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      creationTimestamp: null
+      labels:
+        app: aimp-system
+        logging: "true"
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: aimprole.shaiic.com
+                operator: In
+                values:
+                - controller
+      containers:
+      - args:
+        - -javaagent:/elastic/apm/agent/elastic-apm-agent.jar
+        - -server
+        - -XX:+UseContainerSupport
+        - -XX:MaxRAMPercentage=80.0
+        - -XX:+UseCompressedOops
+        - -XX:+UseCompressedClassPointers
+        - -XX:+SegmentedCodeCache
+        - -verbose:gc
+        - -XX:+PrintCommandLineFlags
+        - -XX:+ExplicitGCInvokesConcurrent
+        - -Djava.security.egd=file:/dev/./urandom
+        - -Xlog:gc*,safepoint:/log/aimp-system.gc.log:time,uptime:filecount=100,filesize=50M
+        - -jar
+        - /deployments/app.jar
+        - --spring.profiles.active=uat
+        - --spring.application.name=aimp-system
+        command:
+        - java
+        env:
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.hostIP
+        - name: aliyun_logs_microsvc
+          value: /log/*.json
+        - name: aliyun_logs_microsvc_format
+          value: json
+        - name: ELASTIC_APM_SERVER_URL
+          value: http://apm.fat.aimpcloud.cn
+        - name: ELASTIC_APM_SERVICE_NAME
+          value: aimp-system
+        - name: ELASTIC_APM_APPLICATION_PACKAGES
+          value: com.aimpcloud
+        - name: ELASTIC_APM_SECRET_TOKEN
+          value: tcp6g2k9dgkvlh6zs74s4ck9
+        - name: ELASTIC_APM_ENVIRONMENT
+          value: uat
+        - name: ELASTIC_APM_ENABLE_EXPERIMENTAL_INSTRUMENTATIONS
+          value: "true"
+        - name: ELASTIC_APM_CENTRAL_CONFIG
+          value: "false"
+        image: cxyacr.azurecr.cn/aimp-cloud/aimp-system:275
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - /bin/sleep 30
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: aimp-system
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 15
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "2"
+            memory: 4Gi
+          requests:
+            cpu: 100m
+            memory: 1Gi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /log
+          name: ms-log
+        - mountPath: /elastic/apm/agent
+          name: elastic-apm-agent
+      dnsPolicy: ClusterFirstWithHostNet
+      imagePullSecrets:
+      - name: cxycred
+      initContainers:
+      - command:
+        - cp
+        - -v
+        - /usr/agent/elastic-apm-agent.jar
+        - /elastic/apm/agent
+        image: docker.elastic.co/observability/apm-agent-java:1.38.0
+        imagePullPolicy: IfNotPresent
+        name: elastic-java-agent
+        resources: { }
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /elastic/apm/agent
+          name: elastic-apm-agent
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: { }
+      serviceAccount: aimp-cloud
+      serviceAccountName: aimp-cloud
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /data/logs/ms/aimp-system
+          type: ""
+        name: ms-log
+      - emptyDir: { }
+        name: elastic-apm-agent

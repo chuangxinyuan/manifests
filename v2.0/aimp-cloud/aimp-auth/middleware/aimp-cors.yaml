@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: aimp-cors
+spec:
+  headers:
+    accessControlAllowMethods:
+    - "*"
+    accessControlAllowOriginList:
+    - "*"
+    accessControlAllowHeaders:
+    - "*"
+    accessControlMaxAge: 100
+    addVaryHeader: true

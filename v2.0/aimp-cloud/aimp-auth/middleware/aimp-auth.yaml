@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: aimp-auth
+spec:
+  forwardAuth:
+    address: http://aimp-auth.aimp-cloud/api/aimp-auth/auth
+    trustForwardHeader: true
+    authResponseHeaders:
+    - X-AIMP-USER-ID
+    - X-AIMP-USER-NAME
+    - X-AIMP-ORG-ID
+    authRequestHeaders:
+    - X-AIMP-TOKEN
+    - X-AIMP-PROJECT-ID

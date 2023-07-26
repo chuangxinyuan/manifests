@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: aimp-web
+spec:
+  gateways:
+  - istio-system/ingressgateway
+  hosts:
+  - pro.portal.uat.aimpcloud.cn
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: aimp-web
+        port:
+          number: 80

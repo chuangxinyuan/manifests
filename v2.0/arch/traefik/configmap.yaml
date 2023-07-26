@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik
+data:
+  traefik-static.yaml: |
+    serversTransport:
+      maxIdleConnsPerHost: 1
+      forwardingTimeouts:
+        dialTimeout: 60
+    entryPoints:
+      api:
+        address: ":80"
+        forwardedHeaders:
+          insecure: true
+        transport:
+          respondingTimeouts:
+            readTimeout: 60
+            writeTimeout: 60
+    api:
+      dashboard: true
+      insecure: true
+      debug: true
+    providers:
+      kubernetesCRD: {}
+    metrics:
+      prometheus: {}
+    tracing:
+      serviceName: traefik
+      elastic:
+        serverURL: "http://apm.fat.aimpcloud.cn"
+        secretToken: "tcp6g2k9dgkvlh6zs74s4ck9"
+        serviceEnvironment: "fat"
+    ping:
+      entryPoint: "traefik"

@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: aimp-model
+spec:
+  entryPoints:
+  - api
+  routes:
+  - kind: Rule
+    match: PathPrefix(`/api/aimp-model`)
+    priority: 1
+    services:
+    - name: aimp-model
+      port: 80
+    middlewares:
+    - name: aimp-cors
+    - name: aimp-auth

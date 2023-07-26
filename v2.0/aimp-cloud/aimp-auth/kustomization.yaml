@@ -1,0 +1,12 @@
+resources:
+- deploy.yaml
+- service.yaml
+- ingressRoute.yaml
+- middleware/aimp-auth.yaml
+- middleware/aimp-cors.yaml
+- middleware/aimp-file.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: cxyacr.azurecr.cn/aimp-cloud/aimp-auth
+  newTag: "852"
