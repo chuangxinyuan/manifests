@@ -13,4 +13,4 @@ artifactRepository:
     # Key Format for objects stored by Workflows. This can reference Workflow variables
     keyFormat:
       required: true
-      default: artifacts/{{workflow.parameters.orgName}}/{{workflow.namespace}}/data/{{workflow.name}}/{{pod.name}}
+      default: artifacts/aimp/{{workflow.namespace}}/data/{{workflow.name}}/{{pod.name}}
